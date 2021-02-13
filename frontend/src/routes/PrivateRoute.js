@@ -1,15 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
 
-const PrivateRoute = ({ children, ...rest }) => {
-  const authData = localStorage.getItem('authDdfdata');
-  console.log({ authData });
+const PrivateRoute = ({ children, user, ...rest }) => {
+  const userName = user?.name;
 
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        authData ? (
+        userName ? (
           children
         ) : (
           <Redirect
@@ -24,4 +24,8 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(PrivateRoute);

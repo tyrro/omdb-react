@@ -1,4 +1,5 @@
 import urlTemplate from 'url-template';
+const BACKEND_URL = 'http://localhost:8000';
 
 function url(template, params) {
   const myParams = { ...params };
@@ -14,6 +15,10 @@ const routes = {
     create: params => url('/courses{.format}', params),
     update: params => url('/courses/{courseId}{.format}', params),
     destroy: params => url('/courses/{courseId}{.format}', params),
+  },
+  users: {
+    create: params => url(`${BACKEND_URL}/users`, params),
+    login: params => url(`${BACKEND_URL}/token`, params),
   },
 };
 

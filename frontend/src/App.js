@@ -28,13 +28,13 @@ const App = () => (
           <Route exact path="/signup">
             <Signup />
           </Route>
-          <Route exact path="/(|movies)">
+          <PrivateRoute exact path="/(|movies)">
             <MovieList />
-          </Route>
-          <Route exact path="/movies/:id" render={props => <MovieDetails {...props} />} />
-          <Route exact path="/favorites">
+          </PrivateRoute>
+          <PrivateRoute exact path="/movies/:id" render={props => <MovieDetails {...props} />} />
+          <PrivateRoute exact path="/favorites">
             <FavoriteList />
-          </Route>
+          </PrivateRoute>
           <Route exact path="*">
             <PageNotFound />
           </Route>
