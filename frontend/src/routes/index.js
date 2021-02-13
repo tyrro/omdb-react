@@ -1,5 +1,5 @@
 import urlTemplate from 'url-template';
-const BACKEND_URL = 'http://localhost:8000';
+const BASE_BACKEND_URL = 'http://localhost:8000';
 
 function url(template, params) {
   const myParams = { ...params };
@@ -10,15 +10,18 @@ function url(template, params) {
 }
 
 const routes = {
-  courses: {
-    index: params => url('/courses{.format}{?page}', params),
-    create: params => url('/courses{.format}', params),
-    update: params => url('/courses/{courseId}{.format}', params),
-    destroy: params => url('/courses/{courseId}{.format}', params),
-  },
   users: {
-    create: params => url(`${BACKEND_URL}/users`, params),
-    login: params => url(`${BACKEND_URL}/token`, params),
+    create: params => url(`${BASE_BACKEND_URL}/users`, params),
+    login: params => url(`${BASE_BACKEND_URL}/token`, params),
+    favoriteMovies: {
+      index: params => url(`${BASE_BACKEND_URL}/user/favorite_movies`, params),
+      create: params => url(`${BASE_BACKEND_URL}/user/favorite_movies`, params),
+    },
+  },
+
+  movies: {
+    index: params => url(`${BASE_BACKEND_URL}/movies/all{?s,y}`, params),
+    search: params => url(`${BASE_BACKEND_URL}/movies/search{?i}`, params),
   },
 };
 

@@ -32,7 +32,9 @@ const App = () => (
           <PrivateRoute exact path="/(|movies)">
             <MovieList />
           </PrivateRoute>
-          <PrivateRoute exact path="/movies/:id" render={props => <MovieDetails {...props} />} />
+          <PrivateRoute exact path="/movies/:id">
+            <MovieDetails />
+          </PrivateRoute>
           <PrivateRoute exact path="/favorites">
             <FavoriteList />
           </PrivateRoute>

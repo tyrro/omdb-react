@@ -1,7 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-const MovieCard = ({ title, poster, year, imdbId }) => {
+import httpClient from '../../shared/httpClient';
+import routes from '../../routes/index';
+
+const MovieCard = ({ title, poster, year, favorite, imdbId, user }) => {
+  const addToFavorite = async () => {
+    try {
+      const response = await httpClient.post(
+        routes.users.favoriteMovies.create(),
+        { item_id: imdbId },
+        {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        },
+      );
+    } catch (error) {}
+  };
   return (
     <div className="card">
       <Link to={`movies/${imdbId}`}>
@@ -18,11 +35,28 @@ const MovieCard = ({ title, poster, year, imdbId }) => {
           </p>
         </div>
       </Link>
-      <button type="button" className="btn btn-light btn-sm flex-grow-1">
-        Add to Favorite
-      </button>
+
+      {favorite && (
+        <button type="button" className="btn btn-light btn-sm flex-grow-1">
+          Your Favorite
+        </button>
+      )}
+
+      {!favorite && (
+        <button
+          type="button"
+          className="btn btn-light btn-sm flex-grow-1"
+          onClick={() => addToFavorite()}
+        >
+          Add to Favorite
+        </button>
+      )}
     </div>
   );
 };
 
-export default MovieCard;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(MovieCard);

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
-const API_KEY = 'ce762116';
 
-const MovieDetails = () => {
+import httpClient from '../../shared/httpClient';
+import routes from '../../routes/index';
+
+const MovieDetails = ({ user }) => {
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -14,7 +16,11 @@ const MovieDetails = () => {
 
     const fetchMovieDetails = async () => {
       try {
-        const response = await axios.get(`http://www.omdbapi.com/?i=${id}&apikey=${API_KEY}`);
+        const response = await httpClient.get(routes.movies.search({ i: id }), {
+          headers: {
+            Authorization: `Bearer ${user.accessToken}`,
+          },
+        });
         setMovieDetails(response.data);
       } catch (error) {
         setErrorMessage(error);
@@ -41,36 +47,38 @@ const MovieDetails = () => {
               className="card-img-top h-50"
               style={{ objectFit: 'cover' }}
               src={
-                movieDetails?.Poster === 'N/A'
+                movieDetails?.poster === 'N/A'
                   ? 'https://placehold.it/198x264&text=Image+Not+Found'
-                  : movieDetails?.Poster
+                  : movieDetails?.poster
               }
               alt=""
             />
           </div>
           <div className="col-md-8">
-            <h5 className="card-title">{movieDetails?.Title}</h5>
+            <h5 className="card-title">{movieDetails?.title}</h5>
             <p className="card-text">
               <b>Plot: </b>
-              {movieDetails?.Plot}
+              {movieDetails?.plot}
             </p>
             <ul className="list-group list-group-flush">
-              <li className="list-group-item">Type: {movieDetails?.Type}</li>
-              <li className="list-group-item">Year: {movieDetails?.Year}</li>
-              <li className="list-group-item">Runtime: {movieDetails?.Runtime}</li>
-              <li className="list-group-item">Genre: {movieDetails?.Genre}</li>
-              <li className="list-group-item">Language: {movieDetails?.Language}</li>
-              <li className="list-group-item">Country: {movieDetails?.Country}</li>
-              <li className="list-group-item">Director: {movieDetails?.Director}</li>
+              <li className="list-group-item">Type: {movieDetails?.type}</li>
+              <li className="list-group-item">Year: {movieDetails?.year}</li>
+              <li className="list-group-item">Runtime: {movieDetails?.runtime}</li>
+              <li className="list-group-item">Released: {movieDetails?.released}</li>
+              <li className="list-group-item">Genre: {movieDetails?.genre}</li>
+              <li className="list-group-item">Language: {movieDetails?.language}</li>
+              <li className="list-group-item">Country: {movieDetails?.country}</li>
+              <li className="list-group-item">Director: {movieDetails?.director}</li>
               <li className="list-group-item">IMDB Rating: {movieDetails?.imdbRating}</li>
-              {movieDetails?.Ratings.map(rating => (
-                <li className="list-group-item" key={rating?.Source}>
-                  {rating?.Source} Rating: {rating?.Value}
+              <li className="list-group-item">IMDB Votes: {movieDetails?.imdbVotes}</li>
+              {movieDetails?.ratings.map(rating => (
+                <li className="list-group-item" key={rating?.source}>
+                  {rating?.source} Rating: {rating?.value}
                 </li>
               ))}
-              <li className="list-group-item">Language: {movieDetails?.Language}</li>
-              <li className="list-group-item">Actors: {movieDetails?.Actors}</li>
-              <li className="list-group-item">Awards: {movieDetails?.Awards}</li>
+              <li className="list-group-item">Language: {movieDetails?.language}</li>
+              <li className="list-group-item">Actors: {movieDetails?.actors}</li>
+              <li className="list-group-item">Awards: {movieDetails?.awards}</li>
             </ul>
           </div>
         </div>
@@ -79,4 +87,8 @@ const MovieDetails = () => {
   );
 };
 
-export default MovieDetails;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(MovieDetails);
