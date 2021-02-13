@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => (
-  <nav class="navbar navbar-light bg-light">
+  <nav className="navbar navbar-light bg-light">
     <Link className="navbar-brand" to={`${process.env.PUBLIC_URL}/`}>
       OMDB React
     </Link>
