@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 
 const MovieCard = ({ title, poster, year, imdbId }) => {
   return (
-    <div className="card col-sm-3">
+    <div className="card">
       <Link to={`movies/${imdbId}`}>
         <img
           className="card-img-top"
+          style={{ objectFit: 'cover' }}
           src={poster === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : poster}
           alt=""
         />
@@ -17,7 +18,9 @@ const MovieCard = ({ title, poster, year, imdbId }) => {
           </p>
         </div>
       </Link>
-      <div className="card-body">Add to favorite</div>
+      <button type="button" className="btn btn-light btn-sm flex-grow-1">
+        Add to Favorite
+      </button>
     </div>
   );
 };

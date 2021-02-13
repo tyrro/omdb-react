@@ -15,17 +15,15 @@ const MovieList = () => {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
-    setErrorMessage(null);
     const abortController = new AbortController();
-
     fetchMovies({ title: DEFAULT_QUERY_TITLE, year: '' });
-    setIsLoading(false);
-
     return () => abortController.abort();
   }, []);
 
   const fetchMovies = async ({ title, year }) => {
+    setIsLoading(true);
+    setErrorMessage(null);
+
     try {
       const result = await axios.get(
         `http://www.omdbapi.com/?s=${title}&y=${year}&apikey=${API_KEY}`,
@@ -38,6 +36,7 @@ const MovieList = () => {
     } catch (error) {
       setErrorMessage(error);
     }
+    setIsLoading(false);
   };
 
   const fetchMoviesByTitleWithDebounce = useRef(
@@ -47,8 +46,12 @@ const MovieList = () => {
   ).current;
 
   const handleTitleChange = event => {
-    setQueryTitle(event.target.value);
-    fetchMoviesByTitleWithDebounce({ title: event.target.value, year: queryYear });
+    let title = event.target.value;
+    if (title === '') {
+      title = DEFAULT_QUERY_TITLE; // OMDB API requires the title to be non empty
+    }
+    setQueryTitle(title);
+    fetchMoviesByTitleWithDebounce({ title, year: queryYear });
   };
 
   const fetchMoviesByYearWithDebounce = useRef(
@@ -64,10 +67,10 @@ const MovieList = () => {
 
   return (
     <div className="movie-list">
-      <div className="movie-list__search input-group">
+      <div className="movie-list__search input-group mt-4">
         <input
           type="text"
-          className="form-control"
+          className="form-control mr-2"
           placeholder="Search by Title"
           aria-label="Search by Title"
           onChange={event => handleTitleChange(event)}
@@ -75,7 +78,7 @@ const MovieList = () => {
 
         <input
           type="text"
-          className="form-control"
+          className="form-control ml-2"
           placeholder="Search by Year"
           aria-label="Search by Year"
           onChange={event => handleYearChange(event)}
@@ -90,7 +93,7 @@ const MovieList = () => {
         </div>
       )}
 
-      <div className="movie-list__cards row mx-0">
+      <div className="movie-list__cards">
         {!isLoading &&
           movieList.length > 0 &&
           movieList.map(movie => (
