@@ -12,4 +12,6 @@ jobs:
           cd frontend
           yarn
       - name: Run tests
-        run: yarn test:ci
+        run: |-
+          cd frontend
+          yarn test:ci

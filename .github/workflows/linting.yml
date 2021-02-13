@@ -12,4 +12,6 @@ jobs:
           cd frontend
           yarn
       - name: Run ESLint
-        run: yarn lint
+        run: |-
+          cd frontend
+          yarn lint
