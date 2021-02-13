@@ -17,6 +17,7 @@ const MovieCard = ({ title, poster, year, imdbId }) => {
           </p>
         </div>
       </Link>
+      <div className="card-body">Add to favorite</div>
     </div>
   );
 };
