@@ -7,6 +7,7 @@ import Login from './components/Users/Login';
 import Signup from './components/Users/Signup';
 import MovieList from './components/Movies/List';
 import MovieDetails from './components/Movies/Details';
+import FavoriteList from './components/Users/Favorites';
 import PageNotFound from './components/PageNotFound';
 
 import Navbar from './components/Navbar';
@@ -16,24 +17,29 @@ import store from './store';
 import './stylesheets/index.scss';
 
 const App = () => (
-  <div className="omdb-app container-fluid">
+  <div className="omdb-app">
     <Router>
       <Navbar />
-      <Switch>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/signup">
-          <Signup />
-        </Route>
-        <Route exact path="/(|movies)">
-          <MovieList />
-        </Route>
-        <Route exact path="/movies/:id" render={props => <MovieDetails {...props} />} />
-        <Route exact path="*">
-          <PageNotFound />
-        </Route>
-      </Switch>
+      <div className="container-fluid">
+        <Switch>
+          <Route exact path="/login">
+            <Login />
+          </Route>
+          <Route exact path="/signup">
+            <Signup />
+          </Route>
+          <Route exact path="/(|movies)">
+            <MovieList />
+          </Route>
+          <Route exact path="/movies/:id" render={props => <MovieDetails {...props} />} />
+          <Route exact path="/favorites">
+            <FavoriteList />
+          </Route>
+          <Route exact path="*">
+            <PageNotFound />
+          </Route>
+        </Switch>
+      </div>
     </Router>
   </div>
 );
