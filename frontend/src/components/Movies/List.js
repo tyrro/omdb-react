@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 import { debounce } from 'throttle-debounce';
 
 import MovieCard from './Card';
 
-const DEFAULT_QUERY_TITLE = 'satyajit';
-const API_KEY = 'ce762116';
+import httpClient from '../../shared/httpClient';
+import routes from '../../routes/index';
 
-const MovieList = () => {
+const DEFAULT_QUERY_TITLE = 'satyajit';
+
+const MovieList = ({ user }) => {
   const [movieList, setMovieList] = useState([]);
   const [queryTitle, setQueryTitle] = useState(DEFAULT_QUERY_TITLE);
   const [queryYear, setQueryYear] = useState('');
@@ -25,13 +27,16 @@ const MovieList = () => {
     setErrorMessage(null);
 
     try {
-      const result = await axios.get(
-        `http://www.omdbapi.com/?s=${title}&y=${year}&apikey=${API_KEY}`,
-      );
-      if (result.data.Response === 'False') {
-        setErrorMessage(result.data.Error);
+      const response = await httpClient.get(routes.movies.index({ s: title, y: year }), {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
+
+      if (response.data.response === 'False') {
+        setErrorMessage(response.data.error);
       } else {
-        setMovieList(result.data.Search);
+        setMovieList(response.data.search);
       }
     } catch (error) {
       setErrorMessage(error);
@@ -98,11 +103,12 @@ const MovieList = () => {
           movieList.length > 0 &&
           movieList.map(movie => (
             <MovieCard
-              key={movie.imdbID}
-              title={movie.Title}
-              poster={movie.Poster}
-              year={movie.Year}
-              imdbId={movie.imdbID}
+              key={movie.imdbId}
+              title={movie.title}
+              poster={movie.poster}
+              year={movie.year}
+              favorite={movie.favorite}
+              imdbId={movie.imdbId}
             />
           ))}
       </div>
@@ -110,4 +116,8 @@ const MovieList = () => {
   );
 };
 
-export default MovieList;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(MovieList);

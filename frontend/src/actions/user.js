@@ -7,8 +7,8 @@ export const populateUser = data => {
   };
 };
 
-export const removeUser = data => {
+export const removeUser = () => {
   return dispatch => {
-    dispatch({ type: REMOVE_USER, data });
+    dispatch({ type: REMOVE_USER });
   };
 };

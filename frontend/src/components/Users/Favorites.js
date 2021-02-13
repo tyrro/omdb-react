@@ -1,37 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 import MovieCard from '../Movies/Card';
 
-const DEFAULT_QUERY_TITLE = 'satyajit';
-const API_KEY = 'ce762116';
+import httpClient from '../../shared/httpClient';
+import routes from '../../routes/index';
 
-const FavoriteList = () => {
+const FavoriteList = ({ user }) => {
   const [movieList, setMovieList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     const abortController = new AbortController();
-    fetchMovies({ title: DEFAULT_QUERY_TITLE, year: '' });
+    fetchMovies();
     return () => abortController.abort();
   }, []);
 
-  const fetchMovies = async ({ title, year }) => {
+  const fetchMovies = async () => {
     setIsLoading(true);
     setErrorMessage(null);
 
     try {
-      const result = await axios.get(
-        `http://www.omdbapi.com/?s=${title}&y=${year}&apikey=${API_KEY}`,
-      );
-      if (result.data.Response === 'False') {
-        setErrorMessage(result.data.Error);
+      const response = await httpClient.get(routes.users.favoriteMovies.index(), {
+        headers: {
+          Authorization: `Bearer ${user.accessToken}`,
+        },
+      });
+
+      if (response.data.response === 'False') {
+        setErrorMessage(response.data.error);
       } else {
-        setMovieList(result.data.Search);
+        setMovieList(response.data.search);
       }
     } catch (error) {
-      setErrorMessage('Network Error!');
+      setErrorMessage(error);
     }
     setIsLoading(false);
   };
@@ -46,16 +50,21 @@ const FavoriteList = () => {
         </div>
       )}
 
+      {!isLoading && movieList.length === 0 && (
+        <p>You haven't added anything to your favorite list yet</p>
+      )}
+
       <div className="movie-list__cards">
         {!isLoading &&
           movieList.length > 0 &&
           movieList.map(movie => (
             <MovieCard
-              key={movie.imdbID}
-              title={movie.Title}
-              poster={movie.Poster}
-              year={movie.Year}
-              imdbId={movie.imdbID}
+              key={movie.imdbId}
+              title={movie.title}
+              poster={movie.poster}
+              year={movie.year}
+              favorite={movie.favorite}
+              imdbId={movie.imdbId}
             />
           ))}
       </div>
@@ -63,4 +72,8 @@ const FavoriteList = () => {
   );
 };
 
-export default FavoriteList;
+const mapStateToProps = state => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(FavoriteList);

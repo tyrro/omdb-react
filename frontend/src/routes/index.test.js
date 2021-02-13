@@ -2,7 +2,9 @@ import routes from './index';
 
 describe('routes', () => {
   test('supports the required query params and format', () => {
-    expect(routes.courses.index()).toEqual('/courses.json');
-    expect(routes.courses.update({ courseId: 1 })).toEqual('/courses/1.json');
+    expect(routes.movies.index()).toEqual('http://localhost:8000/movies/all');
+    expect(routes.movies.search({ i: 'imdbId' })).toEqual(
+      'http://localhost:8000/movies/search?i=imdbId',
+    );
   });
 });
