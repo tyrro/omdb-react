@@ -72,18 +72,6 @@ const MovieDetails = () => {
             <li className="list-group-item">Actors: {movieDetails?.Actors}</li>
             <li className="list-group-item">Awards: {movieDetails?.Awards}</li>
           </ul>
-          <div className="card-body">
-            <Link to={`${process.env.PUBLIC_URL}/`}>
-              <button type="button" className="btn btn-primary">
-                Back
-              </button>
-            </Link>
-            <Link to={`${process.env.PUBLIC_URL}/`}>
-              <button type="button" className="btn btn-primary ml-5">
-                Back
-              </button>
-            </Link>
-          </div>
         </div>
       )}
     </div>
