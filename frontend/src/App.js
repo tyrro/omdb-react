@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './routes/PrivateRoute';
 
@@ -12,7 +13,7 @@ import PageNotFound from './components/PageNotFound';
 
 import Navbar from './components/Navbar';
 
-import store from './store';
+import { persistor, store } from './configureStore';
 
 import './stylesheets/index.scss';
 
@@ -46,9 +47,11 @@ const App = () => (
 
 const AppWithProvider = () => (
   <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
   </Provider>
 );
 
