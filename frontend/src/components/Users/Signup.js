@@ -30,7 +30,7 @@ const Signup = () => {
               type="name"
               className="form-control"
               placeholder="Enter name"
-              onClick={event => setName(event.target.value)}
+              onChange={event => setName(event.target.value)}
             />
           </div>
           <div className="form-group">
@@ -39,7 +39,7 @@ const Signup = () => {
               type="email"
               className="form-control"
               placeholder="Enter email"
-              onClick={event => setEmail(event.target.value)}
+              onChange={event => setEmail(event.target.value)}
             />
           </div>
           <div className="form-group">
@@ -48,7 +48,7 @@ const Signup = () => {
               type="password"
               className="form-control"
               placeholder="Password"
-              onClick={event => setPasword(event.target.value)}
+              onChange={event => setPasword(event.target.value)}
             />
           </div>
           <button type="submit" className="btn btn-primary">

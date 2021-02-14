@@ -37,6 +37,9 @@ class User(BaseModel):
 class UserInDB(User):
     hashed_password: str
 
+class UserFavoriteMovie(BaseModel):
+    item_id: str
+
 class UserEntry(BaseModel):
     name    : Optional[str] = Field(..., example='test_name')
     email   : str = Field(..., example='test@test.com')
@@ -177,8 +180,8 @@ async def search_single_movie(i: str, current_user: User = Depends(get_current_u
     return result
 
 @app.post("/user/favorite_movies")
-async def add_favorite_item(item_id: str, current_user: User = Depends(get_current_user)):
-    fav_item = create_favorite_item(item_id = item_id, owner = current_user)
+async def add_favorite_item(favorite_movies: UserFavoriteMovie, current_user: User = Depends(get_current_user)):
+    fav_item = create_favorite_item(item_id = favorite_movies.item_id, owner = current_user)
     return { 'fav_item_id': fav_item.imdb_id }
 
 @app.get("/user/favorite_movies")

@@ -9,7 +9,7 @@ import Signup from './components/Users/Signup';
 import MovieList from './components/Movies/List';
 import MovieDetails from './components/Movies/Details';
 import FavoriteList from './components/Users/Favorites';
-import PageNotFound from './components/PageNotFound';
+import PageNotFound from './components/PageNotFound/index';
 
 import Navbar from './components/Navbar';
 

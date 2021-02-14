@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import httpClient from '../../shared/httpClient';
 import routes from '../../routes/index';
@@ -9,7 +9,7 @@ import { populateUser } from '../../actions/user';
 const Login = ({ populateUser }) => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const location = useLocation();
+  const [errorMessage, setErrorMessage] = useState(null);
   const history = useHistory();
 
   const handleSubmit = async event => {
@@ -21,8 +21,11 @@ const Login = ({ populateUser }) => {
     try {
       const response = await httpClient.post(routes.users.login(), formData);
       populateUser(response.data);
-      history.push(location?.state?.form || '/');
-    } catch (error) {}
+      history.push('/');
+    } catch (error) {
+      console.log({ error });
+      setErrorMessage(error.response.data.detail);
+    }
   };
 
   return (
@@ -31,6 +34,11 @@ const Login = ({ populateUser }) => {
         <div className="alert alert-secondary" role="alert">
           Please Login
         </div>
+        {errorMessage && (
+          <div className="alert alert-danger" role="alert">
+            {errorMessage}
+          </div>
+        )}
         <div className="form-group text-left">
           <h2>Login</h2>
         </div>
@@ -41,7 +49,7 @@ const Login = ({ populateUser }) => {
               type="email"
               className="form-control"
               placeholder="Enter email"
-              onClick={event => setEmail(event.target.value)}
+              onChange={event => setEmail(event.target.value)}
             />
           </div>
           <div className="form-group">
@@ -50,7 +58,7 @@ const Login = ({ populateUser }) => {
               type="password"
               className="form-control"
               placeholder="Password"
-              onClick={event => setPassword(event.target.value)}
+              onChange={event => setPassword(event.target.value)}
             />
           </div>
           <button type="submit" className="btn btn-primary">

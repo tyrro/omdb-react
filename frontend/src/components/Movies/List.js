@@ -44,6 +44,8 @@ const MovieList = ({ user }) => {
     setIsLoading(false);
   };
 
+  const fetchMoviesWithCurrentState = () => fetchMovies({ title: queryTitle, year: queryYear });
+
   const fetchMoviesByTitleWithDebounce = useRef(
     debounce(1000, ({ title, year }) => {
       fetchMovies({ title, year });
@@ -109,6 +111,7 @@ const MovieList = ({ user }) => {
               year={movie.year}
               favorite={movie.favorite}
               imdbId={movie.imdbId}
+              fetchMoviesWithCurrentState={() => fetchMoviesWithCurrentState()}
             />
           ))}
       </div>

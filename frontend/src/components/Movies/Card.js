@@ -5,10 +5,18 @@ import { Link } from 'react-router-dom';
 import httpClient from '../../shared/httpClient';
 import routes from '../../routes/index';
 
-const MovieCard = ({ title, poster, year, favorite, imdbId, user }) => {
+const MovieCard = ({
+  title,
+  poster,
+  year,
+  favorite,
+  imdbId,
+  fetchMoviesWithCurrentState,
+  user,
+}) => {
   const addToFavorite = async () => {
     try {
-      const response = await httpClient.post(
+      await httpClient.post(
         routes.users.favoriteMovies.create(),
         { item_id: imdbId },
         {
@@ -17,6 +25,7 @@ const MovieCard = ({ title, poster, year, favorite, imdbId, user }) => {
           },
         },
       );
+      fetchMoviesWithCurrentState();
     } catch (error) {}
   };
   return (
@@ -37,7 +46,11 @@ const MovieCard = ({ title, poster, year, favorite, imdbId, user }) => {
       </Link>
 
       {favorite && (
-        <button type="button" className="btn btn-light btn-sm flex-grow-1">
+        <button
+          type="button"
+          className="btn btn-light btn-sm flex-grow-1"
+          style={{ cursor: 'default' }}
+        >
           Your Favorite
         </button>
       )}
