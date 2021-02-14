@@ -10,7 +10,7 @@ const Navbar = ({ user, removeUser }) => (
     </Link>
     {user?.name ? (
       <ul className="nav justify-content-end">
-        <li className="align-self-center mr-3">rajib.das.shuva@gmail.com</li>
+        <li className="align-self-center mr-3">{user.name}</li>
         <li>
           <Link to="/favorites">
             <button type="button" className="btn btn-primary mr-3">

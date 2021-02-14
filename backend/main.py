@@ -41,7 +41,7 @@ class UserFavoriteMovie(BaseModel):
     item_id: str
 
 class UserEntry(BaseModel):
-    name    : Optional[str] = Field(..., example='test_name')
+    name    : str = Field(..., example='John Doe')
     email   : str = Field(..., example='test@test.com')
     password: str = Field(..., example='1234')
 
