@@ -101,6 +101,7 @@ const MovieList = ({ user }) => {
       )}
 
       <div className="movie-list__cards">
+        {!isLoading && movieList.length === 0 && <p>No results found!</p>}
         {!isLoading &&
           movieList.length > 0 &&
           movieList.map(movie => (
