@@ -44,7 +44,7 @@ Search, Favorite lists and more!
   pipenv shell
   cp .env.example .env
   # now create a database in your machine and edit the .env file to include it
-  # SQLALCHEMY_DATABASE_URL = "postgresql://user:postgres@127.0.0.1:5432/db_name"          // edit this line
+  # DATABASE_URL = "postgresql://user:postgres@127.0.0.1:5432/db_name"                       // edit this line
   ```
 
 - Foreman installation
