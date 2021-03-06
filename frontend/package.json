@@ -1,5 +1,6 @@
 {
   "name": "omdb-react",
+  "homepage": "http://rajibds.github.io/omdb-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -26,6 +27,7 @@
     "axios-mock-adapter": "^1.19.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "gh-pages": "^3.1.0",
     "jest-junit": "^12.0.0",
     "prettier": "^2.2.1",
     "redux-mock-store": "^1.5.4"
@@ -34,6 +36,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "test:watch": "TZ=UTC jest --watch",
     "test:ci": "yarn test --ci --testResultsProcessor jest-junit --runInBand",
