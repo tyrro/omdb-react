@@ -39,7 +39,7 @@ const MovieList = ({ user }) => {
         setMovieList(response.data.search);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setErrorMessage(error.response.data.detail);
     }
     setIsLoading(false);
   };
@@ -74,6 +74,14 @@ const MovieList = ({ user }) => {
 
   return (
     <div className="movie-list">
+      {isLoading && <div className="lds-dual-ring" />}
+
+      {errorMessage && (
+        <div className="alert alert-danger" role="alert">
+          {errorMessage}
+        </div>
+      )}
+
       <div className="movie-list__search input-group mt-4">
         <input
           type="text"
@@ -91,14 +99,6 @@ const MovieList = ({ user }) => {
           onChange={event => handleYearChange(event)}
         />
       </div>
-
-      {isLoading && <div className="lds-dual-ring" />}
-
-      {errorMessage && (
-        <div className="alert alert-danger" role="alert">
-          {errorMessage}
-        </div>
-      )}
 
       <div className="movie-list__cards">
         {!isLoading && movieList.length === 0 && <p>No results found!</p>}

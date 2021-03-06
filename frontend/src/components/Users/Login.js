@@ -23,7 +23,6 @@ const Login = ({ populateUser }) => {
       populateUser(response.data);
       history.push('/');
     } catch (error) {
-      console.log({ error });
       setErrorMessage(error.response.data.detail);
     }
   };

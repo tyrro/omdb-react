@@ -22,4 +22,3 @@ class FavoriteMovie(Base):
     owner_id = Column(String, ForeignKey("users.id"))
 
     owner = relationship("User", back_populates="favorite_movies")
-

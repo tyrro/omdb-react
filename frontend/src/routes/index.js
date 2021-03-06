@@ -1,5 +1,6 @@
 import urlTemplate from 'url-template';
-const BASE_BACKEND_URL = 'http://localhost:8000';
+const BASE_BACKEND_URL =
+  process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'HEROKU URL';
 
 function url(template, params) {
   const myParams = { ...params };

@@ -1,4 +1,4 @@
-import databases, sqlalchemy, uuid
+import databases, sqlalchemy, uuid, models, os
 from sqlalchemy.orm import Session
 from datetime import datetime, timedelta
 from typing import List, Optional
@@ -9,14 +9,11 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel, Field
 from database import SessionLocal, engine
-import models
 import omdb_api_consumer as oac
 
 models.Base.metadata.create_all(bind=engine)
 
-# to get a string like this run:
-# openssl rand -hex 32
-SECRET_KEY = "8f4e2bbec617c5288ce18aba5fcbba81fade2d707f20a2364ee0578a8d7c9359"
+SECRET_KEY = os.environ['APP_SECRET_KEY']
 ALGORITHM = "HS256"
 
 class Token(BaseModel):

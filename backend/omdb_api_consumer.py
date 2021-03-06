@@ -1,6 +1,6 @@
-import requests
+import requests, os
 
-API_KEY = '71a8f47a'
+API_KEY = os.environ['OMDB_API_KEY']
 API_URL = 'http://www.omdbapi.com/?apiKey=' + API_KEY
 
 def call_api(query):

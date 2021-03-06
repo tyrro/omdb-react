@@ -34,7 +34,7 @@ const FavoriteList = ({ user }) => {
         setMovieList(response.data.search);
       }
     } catch (error) {
-      setErrorMessage(error);
+      setErrorMessage(error.response.data.detail);
     }
     setIsLoading(false);
   };

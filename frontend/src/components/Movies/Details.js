@@ -23,7 +23,7 @@ const MovieDetails = ({ user }) => {
         });
         setMovieDetails(response.data);
       } catch (error) {
-        setErrorMessage(error);
+        setErrorMessage(error.response.data.detail);
       }
     };
     fetchMovieDetails();
