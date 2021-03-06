@@ -1,6 +1,8 @@
 import urlTemplate from 'url-template';
 const BASE_BACKEND_URL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:8000' : 'HEROKU URL';
+  process.env.NODE_ENV === 'development'
+    ? 'http://localhost:8000'
+    : 'https://omdb-in-react.herokuapp.com';
 
 function url(template, params) {
   const myParams = { ...params };
