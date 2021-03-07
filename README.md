@@ -15,6 +15,12 @@ Search, Favorite lists and more!
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   ```
 
+- python3:
+
+  ```bash
+  brew install python@3.9
+  ```
+
 - PostgreSQL
 
   ```bash
@@ -40,7 +46,7 @@ Search, Favorite lists and more!
   cd backend
   pip3 install pipenv
   pip3 install -r requirements.txt
-  pipenv --python 2.7
+  pipenv --python 3.9
   pipenv shell
   cp .env.example .env
   # now create a database in your machine and edit the .env file to include it
