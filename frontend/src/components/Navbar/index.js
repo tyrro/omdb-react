@@ -5,7 +5,7 @@ import { removeUser } from '../../actions/user';
 
 const Navbar = ({ user, removeUser }) => (
   <nav className="navbar navbar-light bg-light">
-    <Link className="navbar-brand" to={`${process.env.PUBLIC_URL}/`}>
+    <Link className="navbar-brand" to="/">
       OMDB App
     </Link>
     {user?.name ? (

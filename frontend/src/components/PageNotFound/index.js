@@ -6,7 +6,7 @@ const PageNotFound = () => {
     <>
       <p>404 | Page not found</p>
       <p>
-        <Link to={`${process.env.PUBLIC_URL}/`}>Back to Home</Link>
+        <Link to="/">Back to Home</Link>
       </p>
     </>
   );

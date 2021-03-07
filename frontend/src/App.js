@@ -19,7 +19,7 @@ import './stylesheets/index.scss';
 
 const App = () => (
   <div className="omdb-app">
-    <Router>
+    <Router basename={process.env.PUBLIC_URL}>
       <Navbar />
       <div className="container-fluid">
         <Switch>
