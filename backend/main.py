@@ -9,11 +9,14 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from pydantic import BaseModel, Field
 from database import SessionLocal, engine
+from dotenv import load_dotenv
+
 import omdb_api_consumer as oac
 
 models.Base.metadata.create_all(bind=engine)
 
-SECRET_KEY = os.environ['APP_SECRET_KEY']
+load_dotenv()
+SECRET_KEY = os.getenv('APP_SECRET_KEY')
 ALGORITHM = "HS256"
 
 class Token(BaseModel):

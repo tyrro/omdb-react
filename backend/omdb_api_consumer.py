@@ -1,6 +1,8 @@
 import requests, os
+from dotenv import load_dotenv
 
-API_KEY = os.environ['OMDB_API_KEY']
+load_dotenv()
+API_KEY = os.getenv('OMDB_API_KEY')
 API_URL = 'http://www.omdbapi.com/?apiKey=' + API_KEY
 
 def call_api(query):
