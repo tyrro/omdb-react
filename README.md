@@ -1,5 +1,5 @@
 # OMDB React
-rajibds.github.io/omdb-react
+https://rajibds.github.io/omdb-react
 
 This project makes use of the OMDB API's(http://www.omdbapi.com/) in the backend, and consumes the API with a React frontend with Authentication, Search, Favorite movies lists and more!
 
