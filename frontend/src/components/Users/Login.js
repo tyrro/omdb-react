@@ -34,7 +34,7 @@ const Login = ({ populateUser }) => {
           Please Login.
           <br />
           You can use the following credentials to login as well: <br />
-          email: 'test@example.com', password: '12345'
+          email: test@example.com, password: 12345
         </div>
         {errorMessage && (
           <div className="alert alert-danger" role="alert">
