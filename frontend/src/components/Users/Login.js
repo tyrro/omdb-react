@@ -31,7 +31,10 @@ const Login = ({ populateUser }) => {
     <div className="row">
       <div className="w-50 mx-auto">
         <div className="alert alert-secondary" role="alert">
-          Please Login
+          Please Login.
+          <br />
+          You can use the following credentials to login as well: <br />
+          email: 'test@example.com', password: '12345'
         </div>
         {errorMessage && (
           <div className="alert alert-danger" role="alert">
